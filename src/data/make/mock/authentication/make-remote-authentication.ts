@@ -14,7 +14,9 @@ export const makeRemoteAuthentication = async (url: string, httpPostClient: IHtt
     ) {}
 
     public async auth (params?: IAuthenticationParams): Promise<IAccountModel> {
-      await this.httpPostClient.post(this.url)
+      await this.httpPostClient.post({
+        url: this.url
+      })
 
       return {
         accessToken: ''
