@@ -16,7 +16,7 @@ interface ISystemUnderTestTypes {
   httpPostClientStub: IHttpPostClient
 
 }
-const makeSystemUnderTest = async (): Promise<ISystemUnderTestTypes> => {
+const makeSystemUnderTest = async (url: string): Promise<ISystemUnderTestTypes> => {
   const httpPostClientStub = await makeHttpPostClient()
   const systemUnderTest = await makeRemoteAuthentication(url, httpPostClientStub)
 
@@ -28,7 +28,7 @@ const makeSystemUnderTest = async (): Promise<ISystemUnderTestTypes> => {
 
 describe('RemoteAuthentication', () => {
   test('should call HttpClient with correct URL', async () => {
-    const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest()
+    const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest(url)
 
     await systemUnderTest.auth(informationsOfAuthentication.bodyMatch)
 

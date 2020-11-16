@@ -4,7 +4,7 @@ import {
 } from './make-remote-authentication-protocols'
 import {
   IAccountModel
-} from '../make-protocols'
+} from '../../make-protocols'
 
 export const makeRemoteAuthentication = async (url: string, httpPostClient: IHttpPostClient): Promise<IAuthentication> => {
   class RemoteAuthenticationStub implements IAuthentication {
