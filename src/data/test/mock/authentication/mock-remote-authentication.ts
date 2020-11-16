@@ -1,12 +1,12 @@
 import {
   IAuthentication, IAuthenticationParams,
   IHttpPostClient
-} from './make-remote-authentication-protocols'
+} from './mock-remote-authentication-protocols'
 import {
   IAccountModel
-} from '../../make-protocols'
+} from '../../mock-protocols'
 
-export const makeRemoteAuthentication = async (url: string, httpPostClient: IHttpPostClient): Promise<IAuthentication> => {
+export const mockRemoteAuthentication = async (url: string, httpPostClient: IHttpPostClient): Promise<IAuthentication> => {
   class RemoteAuthenticationStub implements IAuthentication {
     constructor (
       private readonly url: string,
@@ -15,7 +15,8 @@ export const makeRemoteAuthentication = async (url: string, httpPostClient: IHtt
 
     public async auth (params?: IAuthenticationParams): Promise<IAccountModel> {
       await this.httpPostClient.post({
-        url: this.url
+        url: this.url,
+        body: params
       })
 
       return {

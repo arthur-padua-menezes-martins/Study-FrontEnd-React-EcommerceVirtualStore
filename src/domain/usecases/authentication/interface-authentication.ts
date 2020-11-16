@@ -1,6 +1,6 @@
 import {
   IAccountModel
-} from '../../model/account/account-model'
+} from '@/domain/model/account/account-model'
 
 export interface IAuthenticationParams {
   [field: string]: string | object | boolean

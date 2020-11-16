@@ -3,21 +3,21 @@ import {
   IHttpPostClient
 } from './remote-authentication-protocols'
 import {
-  makeRemoteAuthentication,
-  makeHttpPostClient
-} from './remote-authentication-make'
+  mockRemoteAuthentication,
+  mockHttpPostClient,
+  mockAuthentication
+} from './remote-authentication-mock'
 import {
-  url,
-  informationsOfAuthentication
+  fakerURL
 } from './remote-authentication-utils'
 
 interface ISystemUnderTestTypes {
   systemUnderTest: IAuthentication
   httpPostClientStub: IHttpPostClient
 }
-const makeSystemUnderTest = async (url: string): Promise<ISystemUnderTestTypes> => {
-  const httpPostClientStub = await makeHttpPostClient()
-  const systemUnderTest = await makeRemoteAuthentication(url, httpPostClientStub)
+const makeSystemUnderTest = async (url: string = fakerURL): Promise<ISystemUnderTestTypes> => {
+  const httpPostClientStub = await mockHttpPostClient()
+  const systemUnderTest = await mockRemoteAuthentication(url, httpPostClientStub)
 
   return {
     systemUnderTest,
@@ -25,20 +25,24 @@ const makeSystemUnderTest = async (url: string): Promise<ISystemUnderTestTypes> 
   }
 }
 
+const httpRequest = {
+  authenticationParams: mockAuthentication()
+}
+
 describe('RemoteAuthentication', () => {
   test('should call HttpClient with correct URL', async () => {
-    const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest(url)
+    const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest()
 
-    await systemUnderTest.auth(informationsOfAuthentication.bodyMatch)
+    await systemUnderTest.auth(httpRequest.authenticationParams)
 
-    expect(httpPostClientStub.url).toBe(url)
+    expect(httpPostClientStub.url).toBe(fakerURL)
   })
 
   test('should call HttpClient with correct body', async () => {
-    const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest(url)
+    const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest()
 
-    await systemUnderTest.auth(informationsOfAuthentication.bodyMatch)
+    await systemUnderTest.auth(httpRequest.authenticationParams)
 
-    expect(httpPostClientStub.url).toBe(url)
+    expect(httpPostClientStub.body).toEqual(httpRequest.authenticationParams)
   })
 })

@@ -4,6 +4,3 @@ export {
 export {
   IHttpPostClient
 } from '@/data/protocols/http/client/post/http-post-client-interface'
-export {
-  IAccountModel
-} from '../general-protocols'

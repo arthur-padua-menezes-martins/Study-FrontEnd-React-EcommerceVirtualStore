@@ -12,7 +12,8 @@ export class RemoteAuthentication implements IAuthentication {
 
   public async auth (params: IAuthenticationParams): Promise<IAccountModel> {
     await this.httpPostClient.post({
-      url: this.url
+      url: this.url,
+      body: params
     })
 
     return {

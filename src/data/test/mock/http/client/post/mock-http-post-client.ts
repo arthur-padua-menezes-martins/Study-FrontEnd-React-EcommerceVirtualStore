@@ -1,15 +1,17 @@
 import {
   IHttpPostClient, IHttpPostClientParams
-} from './make-http-post-client-protocols'
+} from './mock-http-post-client-protocols'
 
-export const makeHttpPostClient = async (): Promise<any> => {
+export const mockHttpPostClient = async (): Promise<any> => {
   class HttpClientStub implements IHttpPostClient {
     public url?: string
+    public body?: object
 
     public async post (params: IHttpPostClientParams): Promise<void> {
-      const { url } = params
+      const { url, body } = params
 
       this.url = url
+      this.body = body
     }
   }
 
