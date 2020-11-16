@@ -1,8 +1,8 @@
 import {
   IAccountModel
-} from '../../model/account/account'
+} from '../../model/account/account-model'
 
-interface IAuthenticationParams {
+export interface IAuthenticationParams {
   [field: string]: string | object | boolean
   personal: {
     [field: string]: string
@@ -23,5 +23,5 @@ interface IAuthenticationParams {
 }
 
 export interface IAuthentication {
-  auth (params: IAuthenticationParams): Promise<IAccountModel>
+  auth: (params: IAuthenticationParams) => Promise<IAccountModel>
 }
