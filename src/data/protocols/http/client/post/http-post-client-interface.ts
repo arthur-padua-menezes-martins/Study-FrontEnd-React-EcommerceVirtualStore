@@ -2,15 +2,15 @@ import {
   IHttpResponse
 } from '../../export-all'
 
-export interface IHttpPostClientParams {
+export interface IHttpPostClientParams<T> {
   url: string
-  body?: object
+  body?: T
 }
 
-export interface IHttpPostClient {
+export interface IHttpPostClient<T, R> {
   url?: string
-  body?: object
-  response: IHttpResponse
+  body?: T
+  response: IHttpResponse<R>
 
-  post: (params: IHttpPostClientParams) => Promise<IHttpResponse>
+  post: (params: IHttpPostClientParams<T>) => Promise<IHttpResponse<R>>
 }

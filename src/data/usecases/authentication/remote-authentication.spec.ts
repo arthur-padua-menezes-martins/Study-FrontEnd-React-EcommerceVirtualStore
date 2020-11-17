@@ -3,7 +3,9 @@ import {
 } from './remote-authentication'
 import {
   IHttpResponseStatusCode,
-  IHttpPostClient
+  IAuthenticationParams,
+  IHttpPostClient,
+  IAccountModel
 } from './remote-authentication-protocols'
 import {
   mockHttpPostClient,
@@ -19,7 +21,7 @@ import {
 
 interface ISystemUnderTestTypes {
   systemUnderTest: RemoteAuthentication
-  httpPostClientStub: IHttpPostClient
+  httpPostClientStub: IHttpPostClient<IAuthenticationParams, IAccountModel>
 }
 const makeSystemUnderTest = async (url: string = fakerURL): Promise<ISystemUnderTestTypes> => {
   const httpPostClientStub = await mockHttpPostClient()
@@ -89,6 +91,14 @@ describe('RemoteAuthentication', () => {
   })
 
   test('should call HttpClient with correct body <version: 0.0.1>', async () => {
+    const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest()
+
+    await systemUnderTest.auth(httpRequest.authenticationParams)
+
+    expect(httpPostClientStub.body).toEqual(httpRequest.authenticationParams)
+  })
+
+  test('should return HttpClient with correct body <version: 0.0.1>', async () => {
     const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest()
 
     await systemUnderTest.auth(httpRequest.authenticationParams)

@@ -1,7 +1,8 @@
 import {
   IHttpResponseStatusCode,
   IAuthenticationParams,
-  IHttpPostClient
+  IHttpPostClient,
+  IAccountModel
 } from './remote-authentication-protocols'
 import {
   InvalidCredentialsError,
@@ -11,7 +12,7 @@ import {
 export class RemoteAuthentication {
   constructor (
     private readonly url: string,
-    private readonly httpPostClient: IHttpPostClient
+    private readonly httpPostClient: IHttpPostClient<IAuthenticationParams, IAccountModel>
   ) {}
 
   public async auth (params: IAuthenticationParams): Promise<void> {

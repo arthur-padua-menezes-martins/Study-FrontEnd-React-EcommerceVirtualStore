@@ -4,14 +4,14 @@ import {
 } from './mock-http-post-client-protocols'
 
 export const mockHttpPostClient = async (): Promise<any> => {
-  class HttpClientStub implements IHttpPostClient {
+  class HttpClientStub<T, R> implements IHttpPostClient<T, R> {
     public url?: string
-    public body?: object
-    public readonly response: IHttpResponse = {
+    public body?: T
+    public readonly response: IHttpResponse<R> = {
       statusCode: IHttpResponseStatusCode.ok
     }
 
-    public async post (params: IHttpPostClientParams): Promise<IHttpResponse> {
+    public async post (params: IHttpPostClientParams<T>): Promise<IHttpResponse<R>> {
       const { url, body } = params
 
       this.url = url
