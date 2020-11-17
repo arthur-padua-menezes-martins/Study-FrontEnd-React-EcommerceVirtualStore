@@ -1,4 +1,7 @@
 export {
+  IHttpResponseStatusCode
+} from '@/data/protocols/http/response/http-response-interface'
+export {
   IAuthentication, IAuthenticationParams
 } from '@/domain/usecases/authentication/interface-authentication'
 export {
