@@ -16,7 +16,8 @@ import {
   UnexpectedError
 } from './remote-authentication-errors'
 import {
-  fakerURL
+  fakerURL,
+  informationsOfAccount
 } from './remote-authentication-utils'
 
 interface ISystemUnderTestTypes {
@@ -98,11 +99,16 @@ describe('RemoteAuthentication', () => {
     expect(httpPostClientStub.body).toEqual(httpRequest.authenticationParams)
   })
 
-  test('should return HttpClient with correct body <version: 0.0.1>', async () => {
+  test('should return an accountModel if HttpClient returns statusCode 200 <version: 0.0.1>', async () => {
     const { systemUnderTest, httpPostClientStub } = await makeSystemUnderTest()
+    const httpResult = informationsOfAccount.token.access
 
-    await systemUnderTest.auth(httpRequest.authenticationParams)
+    httpPostClientStub.response = {
+      statusCode: IHttpResponseStatusCode.ok,
+      body: httpResult
+    }
+    const account = await systemUnderTest.auth(httpRequest.authenticationParams)
 
-    expect(httpPostClientStub.body).toEqual(httpRequest.authenticationParams)
+    expect(account).toEqual(httpResult)
   })
 })

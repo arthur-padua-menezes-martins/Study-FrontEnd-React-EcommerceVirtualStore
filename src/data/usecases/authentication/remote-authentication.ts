@@ -15,14 +15,14 @@ export class RemoteAuthentication {
     private readonly httpPostClient: IHttpPostClient<IAuthenticationParams, IAccountModel>
   ) {}
 
-  public async auth (params: IAuthenticationParams): Promise<void> {
+  public async auth (params: IAuthenticationParams): Promise<IAccountModel> {
     const httpResponse = await this.httpPostClient.post({
       url: this.url,
       body: params
     })
 
     switch (httpResponse.statusCode) {
-      case IHttpResponseStatusCode.ok: break
+      case IHttpResponseStatusCode.ok: return httpResponse.body
       case IHttpResponseStatusCode.unauthorized: throw new InvalidCredentialsError()
       default: throw new UnexpectedError()
     }
