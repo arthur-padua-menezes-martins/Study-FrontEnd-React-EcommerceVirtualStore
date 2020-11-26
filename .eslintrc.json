@@ -9,6 +9,5 @@
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/no-extraneous-class": "off",
     "@typescript-eslint/strict-boolean-expressions" : "off"
-    
   }
 }
